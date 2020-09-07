@@ -17,53 +17,57 @@ class TicTacToeGame():
 
   def is_over(self): # TODO: Finish this function by adding checks for a winning game (rows, columns, diagonals)
     if self.board[0] is not None:
-      #first column or first row
+      #first row or first column player
       if self.board[0] is _PLAYER_SYMBOL:
         if((self.board[0] == _PLAYER_SYMBOL and self.board[1] == _PLAYER_SYMBOL and self.board[2] == _PLAYER_SYMBOL) or (self.board[0] == _PLAYER_SYMBOL and self.board[3] == _PLAYER_SYMBOL and self.board[6] == _PLAYER_SYMBOL)):
           self.winner = _PLAYER
           return True
+      #first row or first column machine
       elif self.board[0] is _MACHINE_SYMBOL:
         if((self.board[0] == _MACHINE_SYMBOL and self.board[1] == _MACHINE_SYMBOL and self.board[2] == _MACHINE_SYMBOL) or (self.board[0] == _MACHINE_SYMBOL and self.board[3] == _MACHINE_SYMBOL and self.board[6] == _MACHINE_SYMBOL)):
           self.winner = _MACHINE
           return True
     elif self.board[8] is not None:
-      #last column or last row
+      #last column or last row player
       if self.board[8] is _PLAYER_SYMBOL:
         if((self.board[8] == _PLAYER_SYMBOL and self.board[7] == _PLAYER_SYMBOL and self.board[6] == _PLAYER_SYMBOL) or (self.board[8] == _PLAYER_SYMBOL and self.board[5] == _PLAYER_SYMBOL and self.board[2] == _PLAYER_SYMBOL)):
           self.winner = _PLAYER
           return True
+      #last column or last row player
       elif self.board[8] is _MACHINE_SYMBOL:
         if((self.board[8] == _MACHINE_SYMBOL and self.board[7] == _MACHINE_SYMBOL and self.board[6] == _MACHINE_SYMBOL) or (self.board[8] == _MACHINE_SYMBOL and self.board[5] == _MACHINE_SYMBOL and self.board[2] == _MACHINE_SYMBOL)):
           self.winner = _MACHINE
           return True
+    #diagonals
     elif self.board[4] is not None:
       if self.board[4] is _PLAYER_SYMBOL:
-        #diagonal
+        #diagonal player
         if((self.board[4] == _PLAYER_SYMBOL and self.board[0] == _PLAYER_SYMBOL and self.board[8] == _PLAYER_SYMBOL) or
           (self.board[4] == _PLAYER_SYMBOL and self.board[2] == _PLAYER_SYMBOL and self.board[6] == _PLAYER_SYMBOL)):
           self.winner = _PLAYER
           return True
-        #middle column or middle row
+        #middle column or middle row player
         elif((self.board[4] == _PLAYER_SYMBOL and self.board[1] == _PLAYER_SYMBOL and self.board[7] == _PLAYER_SYMBOL) or
            (self.board[4] == _PLAYER_SYMBOL and self.board[3] == _PLAYER_SYMBOL and self.board[5] == _PLAYER_SYMBOL)):
            self.winner = _PLAYER
            return True    
       elif self.board[4] is _MACHINE_SYMBOL:
-        #diagonal
+        #diagonal player
         if((self.board[4] == _MACHINE_SYMBOL and self.board[0] == _MACHINE_SYMBOL and self.board[8] == _MACHINE_SYMBOL) or
           (self.board[4] == _MACHINE_SYMBOL and self.board[2] == _MACHINE_SYMBOL and self.board[6] == _MACHINE_SYMBOL)):
           self.winner = _MACHINE
           return True
-        #middle column or middle row
+        #middle column or middle row player
         elif((self.board[4] == _MACHINE_SYMBOL and self.board[1] == _MACHINE_SYMBOL and self.board[7] == _MACHINE_SYMBOL) or
           (self.board[4] == _MACHINE_SYMBOL and self.board[3] == _MACHINE_SYMBOL and self.board[5] == _MACHINE_SYMBOL)):
           self.winner = _MACHINE
           return True
-      
+
+    #if board is full and no one match 
     if(self.board.count(None) == 0):
       self.winner = _NO_ONE
       return True
-        
+   
     return False   
 
   def play(self):
@@ -73,6 +77,7 @@ class TicTacToeGame():
     else:
       self.machine_turn()
       self.turn = _PLAYER
+    #to check if the game is over
     self.is_over()
 
   def player_choose_cell(self):
