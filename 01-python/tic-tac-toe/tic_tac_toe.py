@@ -1,4 +1,5 @@
 import re
+import random
 
 _PLAYER = "player"
 _MACHINE = "machine"
@@ -15,7 +16,6 @@ class TicTacToeGame():
     self.winner = None
 
   def is_over(self): # TODO: Finish this function by adding checks for a winning game (rows, columns, diagonals)
-  
     if self.board[0] is not None:
       #first column or first row
       if self.board[0] is _PLAYER_SYMBOL:
@@ -66,8 +66,6 @@ class TicTacToeGame():
         
     return False   
 
-    #return self.board.count(None) == 0
-
   def play(self):
     if self.turn == _PLAYER:
       self.player_turn()
@@ -75,6 +73,7 @@ class TicTacToeGame():
     else:
       self.machine_turn()
       self.turn = _PLAYER
+    self.is_over()
 
   def player_choose_cell(self):
     print("Input empty cell bewtween 0 and 8")
@@ -105,18 +104,20 @@ class TicTacToeGame():
     # TODO: Implement this function to make the machine choose a random cell (use random module)
     # The result of this function should be that self.board now has one more random cell occupied
 
-    for i, cell in enumerate(self.board):
-      if cell is None:
-        self.board[i] = _MACHINE_SYMBOL
-        break
+    ran_cell = random.randint(0, 8)
+    while self.board[ran_cell] is not None:
+      ran_cell = random.randint(0, 8)
 
+    self.board[ran_cell] = _MACHINE_SYMBOL
+
+   
   def format_board(self):
     # TODO: Implement this function, it must be able to print the board in the following format:
-    row0 = "|".join(list(map(lambda c: " " if c is None else c, self.board[0:3])))
-    row1 = "|".join(list(map(lambda c: " " if c is None else c, self.board[3:6])))
-    row2 = "|".join(list(map(lambda c: " " if c is None else c, self.board[6:9])))
+    r1 = "|".join(list(map(lambda row: " " if row is None else row, self.board[0:3])))
+    r2 = "|".join(list(map(lambda row: " " if row is None else row, self.board[3:6])))
+    r3 = "|".join(list(map(lambda row: " " if row is None else row, self.board[6:9])))
 
-    return "\n".join([row0, row1, row2])
+    return "\n".join([r1, r2, r3])
   
 
   def print(self):
@@ -126,5 +127,16 @@ class TicTacToeGame():
 
   def print_result(self):
     # TODO: Implement this function in order to print the result based on the self.winner
-    print("Winner " + self.winner)
+    
+    result = "***GAME OVER*** \n"
+
+    if(self.winner != _NO_ONE):
+      print(result+""+self.winner.upper()+" HAS WON! :)")
+    else:
+      print(result+"NO ONE HAS WON! :(")
+
+
+    
+    
+    
     
